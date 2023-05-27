@@ -1,9 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using SenWGames.Core.Interfaces;
-using SenWGames.Core.Model;
-using SenWGames.Core.Services;
 using SenWGames.Infrastructure;
-using SenWGames.Infrastructure.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,8 +8,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddDbContext<SenwDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString")));
 builder.Services.AddTransient<DbContext, SenwDbContext>();
-builder.Services.AddTransient<IRepository<Value>, EFRepository<Value>>();
-builder.Services.AddTransient<IValueService, ValueService>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
