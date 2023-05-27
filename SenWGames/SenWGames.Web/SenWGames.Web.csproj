@@ -15,4 +15,9 @@
     <ProjectReference Include="..\SenWGames.Infrastructure\SenWGames.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+    <Folder Include="Hubs\" />
+  </ItemGroup>
+
 </Project>
