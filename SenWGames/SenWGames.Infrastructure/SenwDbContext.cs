@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SenWGames.Core.Model;
 
 namespace SenWGames.Infrastructure
 {
@@ -15,11 +14,11 @@ namespace SenWGames.Infrastructure
         {
         }
 
-        public virtual DbSet<Value> Values { get; set; }
+        //public virtual DbSet<Value> Values { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Value>(entity => { entity.ToTable("Values"); });
+            
         }
     }
 }
