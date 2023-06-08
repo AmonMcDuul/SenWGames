@@ -23,4 +23,3 @@ namespace SenWGames.Core.Domain.Common
         }
     }
 }
-}

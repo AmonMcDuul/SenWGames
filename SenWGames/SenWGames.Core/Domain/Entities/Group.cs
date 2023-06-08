@@ -17,6 +17,7 @@ namespace SenWGames.Core.Domain.Entities
         public ICollection<Player> Players { get; private set; }
         public Player GroupLeader { get; private set; }
 
+        public Group() { }
         public Group(string groupName, GameLobby gameLobby, ICollection<GameLobby> playedGames, ICollection<Player> players, Player groupLeader)
         {
             GroupId = Guid.NewGuid().ToString();
