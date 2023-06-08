@@ -17,7 +17,7 @@
 
   <ItemGroup>
     <Folder Include="Controllers\" />
-    <Folder Include="Hubs\" />
+    <Folder Include="ViewModels\" />
   </ItemGroup>
 
 </Project>
