@@ -6,11 +6,11 @@ namespace SenWGames.Web.Hubs
 {
     public class SenWStateManager : ISenWStateManager
     {
-        private readonly DbContextOptionsBuilder<SenwDbContext> _dbContextOptionsBuilder;
+        private readonly DbContextOptionsBuilder<SenWDbContext> _dbContextOptionsBuilder;
 
         public SenWStateManager(IConfiguration configuration) 
         {
-            this._dbContextOptionsBuilder = new DbContextOptionsBuilder<SenwDbContext>();
+            this._dbContextOptionsBuilder = new DbContextOptionsBuilder<SenWDbContext>();
             this._dbContextOptionsBuilder.UseSqlServer(configuration["ConnectionString"]);
         }
 

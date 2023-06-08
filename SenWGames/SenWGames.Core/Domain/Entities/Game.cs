@@ -11,7 +11,7 @@ namespace SenWGames.Core.Domain.Entities
     {
         public string Name { get; protected set; }
         public string Image { get; protected set; }
-        protected Game() { }
+        public Game() { }
         public Game(string name, string image)
         {
             Name = name;
