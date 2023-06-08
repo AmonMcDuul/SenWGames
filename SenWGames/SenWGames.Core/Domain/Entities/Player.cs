@@ -16,7 +16,7 @@ namespace SenWGames.Core.Domain.Entities
         public int Loses { get; private set; }
         public int Draws { get; private set; }
         public string RecentLocation { get; private set; }
-
+        public Player() { }
         
     }
 }
