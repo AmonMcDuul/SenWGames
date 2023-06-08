@@ -17,6 +17,7 @@ namespace SenWGames.Web.Controllers
             this._configuration = configuration;
         }
 
+
         [HttpGet("")]
         public ActionResult<Group> GetAllGroups()
         {
