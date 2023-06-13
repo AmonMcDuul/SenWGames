@@ -1,25 +1,51 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SenWGames.Core.Model;
+using SenWGames.Core.Domain.Common;
+using SenWGames.Core.Domain.Entities;
+using SenWGames.Core.Domain.Entities.Games;
 
 namespace SenWGames.Infrastructure
 {
-    /*
-     * You would want to generate the model from an existing database via scaffolding.
-     * Then move the entities into SenWGames.Core project and keep here the DbContext.
-     * See https://docs.microsoft.com/en-us/ef/core/managing-schemas/scaffolding?tabs=dotnet-core-cli
-     */
-    public class SenwDbContext : DbContext
+    public class SenWDbContext : DbContext
     {
-        public SenwDbContext(DbContextOptions<SenwDbContext> options)
-            : base(options)
-        {
-        }
+        public DbSet<Group> Groups { get; set; }
 
-        public virtual DbSet<Value> Values { get; set; }
+        public SenWDbContext(DbContextOptions<SenWDbContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Value>(entity => { entity.ToTable("Values"); });
+            modelBuilder.Entity<FourInARow>().HasBaseType<Game>();
+            modelBuilder.Entity<TicTacToe>().HasBaseType<Game>();
+        }
+
+        /// <summary>
+        /// Save all changes that are being  tracked
+        /// </summary>
+        /// <returns>Integer</returns>
+        public override int SaveChanges()
+        {
+            // call BaseEntity.SetUpdated for every modified entity
+            var entities = ChangeTracker.Entries();
+
+            foreach (var entity in entities)
+            {
+                if (entity.State == EntityState.Modified)
+                {
+                    var currentEntity = (BaseEntity)entity.Entity;
+                    currentEntity.SetUpdated();
+                }
+            }
+
+            return base.SaveChanges();
+        }
+
+        /// <summary>
+        /// Save changes asynchronously
+        /// </summary>
+        /// <param name="cancellationToken">Cancellation token of type CancellationToken</param>
+        /// <returns>Task of type int</returns>
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            return await base.SaveChangesAsync(cancellationToken);
         }
     }
 }
