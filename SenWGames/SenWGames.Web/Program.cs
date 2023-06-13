@@ -1,7 +1,11 @@
+using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using SenWGames.Infrastructure;
 using SenWGames.Web.Hubs;
+using System.Diagnostics;
 using System.Text.Json.Serialization;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,21 +17,33 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<SenWDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString")));
+builder.Services.AddDbContext<SenWDbContext>(options => options.UseSqlServer(builder.Configuration["ConnectionString"]));
 
 // SignalR
-builder.Services.AddSignalR(options =>
-{
-    // Docs https://learn.microsoft.com/en-us/aspnet/core/signalr/configuration?view=aspnetcore-7.0&tabs=dotnet
-    options.ClientTimeoutInterval = TimeSpan.FromSeconds(66); // should be double KeepAliveInterval
-    options.KeepAliveInterval = TimeSpan.FromSeconds(33);
-})
+////builder.Services.AddSignalR(options =>
+////{
+////    // Docs https://learn.microsoft.com/en-us/aspnet/core/signalr/configuration?view=aspnetcore-7.0&tabs=dotnet
+////    options.ClientTimeoutInterval = TimeSpan.FromSeconds(66); // should be double KeepAliveInterval
+////    options.KeepAliveInterval = TimeSpan.FromSeconds(33);
+////})
+////                .AddJsonProtocol(options =>
+////                {
+////                    options.PayloadSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+////                }
+////                                );
+
+builder.Services.AddSignalR()
     .AddJsonProtocol(options =>
     {
         options.PayloadSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     }
 );
-
+builder.Services.AddSingleton<HubConnection>(provider => {
+    var hubUrl = "https://localhost:7299/signalr"; // Replace with your SignalR hub URL
+    return new HubConnectionBuilder()
+        .WithUrl(hubUrl)
+        .Build();
+});
 builder.Services.AddSingleton<ISenWStateManager, SenWStateManager>();
 
 var app = builder.Build();
@@ -47,10 +63,14 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.UseHttpsRedirection();
+app.UseRouting();
 
+app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+// SignalR hub mapping
+app.MapHub<SenWHub>("/signalr");
 
 app.Run();
