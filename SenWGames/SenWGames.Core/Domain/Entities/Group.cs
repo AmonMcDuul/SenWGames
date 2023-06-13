@@ -12,13 +12,13 @@ namespace SenWGames.Core.Domain.Entities
     {
         public string GroupId { get; private set; }
         public string GroupName { get; private set; }
-        public GameLobby GameLobby { get; private set; }
-        public ICollection<GameLobby> PlayedGames { get; private set; }
-        public ICollection<Player> Players { get; private set; }
-        public Player GroupLeader { get; private set; }
+        public GameLobby? GameLobby { get; private set; }
+        public ICollection<GameLobby>? PlayedGames { get; private set; }
+        public ICollection<Player>? Players { get; private set; }
+        public Player? GroupLeader { get; private set; }
 
         public Group() { }
-        public Group(string groupName, GameLobby gameLobby, ICollection<GameLobby> playedGames, ICollection<Player> players, Player groupLeader)
+        public Group(string groupName, GameLobby? gameLobby, ICollection<GameLobby>? playedGames, ICollection<Player>? players, Player? groupLeader)
         {
             GroupId = Guid.NewGuid().ToString();
             GroupName = groupName;

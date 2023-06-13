@@ -4,6 +4,7 @@ namespace SenWGames.Web.Hubs
 {
     public interface ISenWStateManager
     {
-        Group CreateGroup();
+        List<Group> GetGroups();
+        Group CreateGroup(string groepsNaam);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SenWGames.Core.Domain.Entities;
 using SenWGames.Infrastructure;
+using System.Diagnostics;
 
 namespace SenWGames.Web.Hubs
 {
@@ -14,9 +15,24 @@ namespace SenWGames.Web.Hubs
             this._dbContextOptionsBuilder.UseSqlServer(configuration["ConnectionString"]);
         }
 
-        public Group CreateGroup()
+        public List<Group> GetGroups()
         {
-            throw new NotImplementedException();
+            using (SenWDbContext dbContext = new SenWDbContext(_dbContextOptionsBuilder.Options))
+            {
+                List<Group> groups = dbContext.Groups.ToList();
+                return groups;
+            }
+        }
+
+        public Group CreateGroup(string groepsNaam)
+        {
+            using (SenWDbContext dbContext = new SenWDbContext(_dbContextOptionsBuilder.Options))
+            {
+                Group? group = new Group(groepsNaam, null, null, null, null);
+                dbContext.Groups.Add(group);
+                dbContext.SaveChanges();
+                return group;
+            }
         }
     }
 }
