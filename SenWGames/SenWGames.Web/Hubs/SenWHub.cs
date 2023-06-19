@@ -23,9 +23,26 @@ namespace SenWGames.Web.Hubs
         public async Task<GroupResponseModel> CreateGroup(string groepsNaam)
         {
             Group group = this._senWStateManager.CreateGroup(groepsNaam);
-            //await Groups.AddToGroupAsync(Context.ConnectionId, group.GroupId);
+            await Groups.AddToGroupAsync(Context.ConnectionId, group.GroupId);
             GroupResponseModel result = new GroupResponseModel(group);
             return result;
         }
+
+        public async Task<GroupResponseModel> JoinGroup(string groepId, string playerId)
+        {
+            //return via listner maken
+            Group group = this._senWStateManager.JoinGroup(groepId, playerId);
+            await Groups.AddToGroupAsync(Context.ConnectionId, group.GroupId);
+            GroupResponseModel result = new GroupResponseModel(group);
+            return result;
+        }
+
+        public async Task<PlayerResponseModel> CreatePlayer(string playerName)
+        {
+            Player player = this._senWStateManager.CreatePlayer(playerName);
+            PlayerResponseModel result = new PlayerResponseModel(player);
+            return result;
+        }
+
     }
 }
