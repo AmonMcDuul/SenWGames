@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SenWGames.Core.Domain.Entities;
+using SenWGames.Core.Domain.Entities.Games;
 using SenWGames.Infrastructure;
 using System.Diagnostics;
 
@@ -85,6 +86,41 @@ namespace SenWGames.Web.Hubs
                 }
                 return player;
             }
+        }
+
+        public Game GetGame(long gameId)
+        {
+            using (SenWDbContext dbContext = new SenWDbContext(_dbContextOptionsBuilder.Options))
+            {
+                Game? game = dbContext.Game.FirstOrDefault(p => p.Id == gameId);
+                if (game == null)
+                {
+                    throw new InvalidOperationException();
+                }
+                return game;
+            }
+        }
+        public GameLobby CreateGame(string gameTitle, Group group)
+        {
+            using (SenWDbContext dbContext = new SenWDbContext(_dbContextOptionsBuilder.Options))
+            {
+                GameLobby gameLobby = group.CreateGameLobby(gameTitle);
+                if (gameLobby == null)
+                {
+                    throw new InvalidOperationException();
+                }
+                return gameLobby;
+            }
+        }
+
+        public Game NextRoundUselessBox(long uselessBoxId)
+        {
+            Game game = GetGame(uselessBoxId);
+            if (game is UselessBox uselessBox)
+            {
+                uselessBox.UseUselessBox();
+            }
+            return game;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using SenWGames.Core.Domain.Entities;
+using SenWGames.Core.Domain.Entities.Games;
 
 namespace SenWGames.Web.Hubs
 {
@@ -10,5 +11,10 @@ namespace SenWGames.Web.Hubs
         Group JoinGroup(string groupId, string playerId);
         Player CreatePlayer(string playerName);
         Player GetPlayer(string playerId);
+        Game GetGame(long gameId);
+        GameLobby CreateGame(string gameTitle, Group group);
+
+        Game NextRoundUselessBox(long uselessBoxId);
+
     }
 }
