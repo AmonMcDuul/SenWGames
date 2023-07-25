@@ -17,7 +17,8 @@ namespace SenWGames.Core.Domain.Entities
         public int? Wins { get; private set; }
         public int? Loses { get; private set; }
         public int? Draws { get; private set; }
-        public string? RecentLocation { get; private set; }
+        public double LocationX { get; private set; }
+        public double LocationY { get; private set; }
         protected Player() { }
 
         public Player(string playerName)
@@ -26,6 +27,11 @@ namespace SenWGames.Core.Domain.Entities
             this.Name = playerName;
             this.Avatar = "temp avatar";
         }
-        
+
+        public void setPlayerLocation(double locationX, double locationY)
+        { 
+            this.LocationX = locationX;
+            this.LocationY = locationY; 
+        }
     }
 }
