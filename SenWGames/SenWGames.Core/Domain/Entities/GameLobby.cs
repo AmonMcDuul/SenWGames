@@ -1,4 +1,5 @@
 ﻿using SenWGames.Core.Domain.Common;
+using SenWGames.Core.Domain.Entities.Games;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,12 +20,22 @@ namespace SenWGames.Core.Domain.Entities
         public bool Active { get; private set; }
         public GameLobby() { }
 
-        public GameLobby(string name, ICollection<Player> players, Game game, bool active)
+        public GameLobby(string name, ICollection<Player> players, string gameTitle)
         {
-            Name = name;
-            Players = players;
-            Game = game;
-            Active = active;
+            this.Name = name;
+            this.Players = players;
+
+            //superlelak
+            if(gameTitle == "UselessBox")
+            {
+                this.Game = new UselessBox();
+            }
+            else
+            {
+                this.Game = new UselessBox();
+            }
+
+            this.Active = true;
         }
     }
 }

@@ -27,9 +27,17 @@ namespace SenWGames.Core.Domain.Entities
             Players = players;
             GroupLeader = groupLeader;
         }
+
         public void UpdateName(string newName)
         {
             this.GroupName = newName;        
+        }
+
+        public GameLobby CreateGameLobby(string naam)
+        {
+            //nog iets doen met players.
+            this.GameLobby = new GameLobby(naam, this.Players!, naam);
+            return this.GameLobby;
         }
     }
 }
