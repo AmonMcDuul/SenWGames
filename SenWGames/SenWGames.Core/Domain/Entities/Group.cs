@@ -28,6 +28,11 @@ namespace SenWGames.Core.Domain.Entities
             GroupLeader = groupLeader;
         }
 
+        public void UpdateName(string newName)
+        {
+            this.GroupName = newName;        
+        }
+
         public GameLobby CreateGameLobby(string naam)
         {
             //nog iets doen met players.

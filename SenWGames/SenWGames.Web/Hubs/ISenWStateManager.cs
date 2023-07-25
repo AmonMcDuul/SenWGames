@@ -9,7 +9,7 @@ namespace SenWGames.Web.Hubs
         Group? GetGroup(string groepId);
         Group CreateGroup(string groepsNaam);
         Group JoinGroup(string groupId, string playerId);
-        Player CreatePlayer(string playerName);
+        Player CreatePlayer(string playerName, double locationX, double locationY);
         Player GetPlayer(string playerId);
         Game GetGame(long gameId);
         GameLobby CreateGame(string gameTitle, Group group);

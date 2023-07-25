@@ -64,11 +64,13 @@ namespace SenWGames.Web.Hubs
             }
         }
 
-        public Player CreatePlayer(string playerName)
+        public Player CreatePlayer(string playerName, double locationX, double locationY)
         {
             using (SenWDbContext dbContext = new SenWDbContext(_dbContextOptionsBuilder.Options))
             {
                 Player newPlayer = new Player(playerName);
+
+                newPlayer.setPlayerLocation(locationX, locationY);
                 dbContext.Player.Add(newPlayer);
                 dbContext.SaveChanges();
                 return newPlayer;
