@@ -37,9 +37,9 @@ namespace SenWGames.Web.Hubs
             return result;
         }
 
-        public async Task<PlayerResponseModel> CreatePlayer(string playerName)
+        public async Task<PlayerResponseModel> CreatePlayer(string playerName, double locationX, double locationY)
         {
-            Player player = this._senWStateManager.CreatePlayer(playerName);
+            Player player = this._senWStateManager.CreatePlayer(playerName, locationX, locationY);
             PlayerResponseModel result = new PlayerResponseModel(player);
             return result;
         }

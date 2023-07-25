@@ -27,5 +27,9 @@ namespace SenWGames.Core.Domain.Entities
             Players = players;
             GroupLeader = groupLeader;
         }
+        public void UpdateName(string newName)
+        {
+            this.GroupName = newName;        
+        }
     }
 }
