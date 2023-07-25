@@ -8,6 +8,7 @@ namespace SenWGames.Infrastructure
     public class SenWDbContext : DbContext
     {
         public DbSet<Group> Groups { get; set; }
+        public DbSet<Player> Player { get; set; }
 
         public SenWDbContext(DbContextOptions<SenWDbContext> options) : base(options) { }
 

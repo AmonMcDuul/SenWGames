@@ -23,6 +23,18 @@ namespace SenWGames.Web.Hubs
                 return groups;
             }
         }
+        public Group GetGroup(string groupId)
+        {
+            using (SenWDbContext dbContext = new SenWDbContext(_dbContextOptionsBuilder.Options))
+            {
+                Group? group = dbContext.Groups.FirstOrDefault(g => g.GroupId == groupId);
+                if(group == null)
+                {
+                    throw new InvalidOperationException();
+                }
+                return group;
+            }
+        }
 
         public Group CreateGroup(string groepsNaam)
         {
@@ -32,6 +44,48 @@ namespace SenWGames.Web.Hubs
                 dbContext.Groups.Add(group);
                 dbContext.SaveChanges();
                 return group;
+            }
+        }
+
+        public Group JoinGroup(string groupId, string playerId)
+        {
+            using (SenWDbContext dbContext = new SenWDbContext(_dbContextOptionsBuilder.Options))
+            {
+                Group group = GetGroup(groupId);
+                Player? player = GetPlayer(playerId);
+                if (player == null)
+                {
+                    throw new InvalidOperationException();
+                }
+                group.Players?.Add(player);
+                dbContext.SaveChanges();
+                return group;
+            }
+        }
+
+        public Player CreatePlayer(string playerName, double locationX, double locationY)
+        {
+            using (SenWDbContext dbContext = new SenWDbContext(_dbContextOptionsBuilder.Options))
+            {
+                Player newPlayer = new Player(playerName);
+
+                newPlayer.setPlayerLocation(locationX, locationY);
+                dbContext.Player.Add(newPlayer);
+                dbContext.SaveChanges();
+                return newPlayer;
+            }
+        }
+
+        public Player GetPlayer(string playerId)
+        {
+            using (SenWDbContext dbContext = new SenWDbContext(_dbContextOptionsBuilder.Options))
+            {
+                Player? player = dbContext.Player.FirstOrDefault(p => p.PlayerId == playerId);
+                if (player == null)
+                {
+                    throw new InvalidOperationException();
+                }
+                return player;
             }
         }
     }

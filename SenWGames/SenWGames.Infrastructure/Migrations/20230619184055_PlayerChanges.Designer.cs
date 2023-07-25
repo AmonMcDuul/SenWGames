@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SenWGames.Infrastructure;
 
@@ -11,9 +12,11 @@ using SenWGames.Infrastructure;
 namespace SenWGames.Infrastructure.Migrations
 {
     [DbContext(typeof(SenWDbContext))]
-    partial class SenWDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230619184055_PlayerChanges")]
+    partial class PlayerChanges
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -166,12 +169,6 @@ namespace SenWGames.Infrastructure.Migrations
                     b.Property<long?>("GroupId")
                         .HasColumnType("bigint");
 
-                    b.Property<double>("LocationX")
-                        .HasColumnType("float");
-
-                    b.Property<double>("LocationY")
-                        .HasColumnType("float");
-
                     b.Property<int?>("Loses")
                         .HasColumnType("int");
 
@@ -181,6 +178,9 @@ namespace SenWGames.Infrastructure.Migrations
 
                     b.Property<string>("PlayerId")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RecentLocation")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedAt")
