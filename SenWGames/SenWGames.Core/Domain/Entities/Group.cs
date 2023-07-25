@@ -15,17 +15,22 @@ namespace SenWGames.Core.Domain.Entities
         public GameLobby? GameLobby { get; private set; }
         public ICollection<GameLobby>? PlayedGames { get; private set; }
         public ICollection<Player>? Players { get; private set; }
-        public Player? GroupLeader { get; private set; }
+        public string? GroupLeaderId { get; private set; }
 
         public Group() { }
-        public Group(string groupName, GameLobby? gameLobby, ICollection<GameLobby>? playedGames, ICollection<Player>? players, Player? groupLeader)
+        public Group(string groupName, GameLobby? gameLobby, ICollection<GameLobby>? playedGames, Player player, string? groupLeaderId)
         {
             GroupId = Guid.NewGuid().ToString();
             GroupName = groupName;
             GameLobby = gameLobby;
             PlayedGames = playedGames;
+            //moet even nagedacht worden over het setten van de player
+            List<Player>? players = new List<Player>
+            {
+                player
+            };
             Players = players;
-            GroupLeader = groupLeader;
+            GroupLeaderId = groupLeaderId;
         }
 
         public void UpdateName(string newName)
