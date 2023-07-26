@@ -7,13 +7,13 @@ namespace SenWGames.Web.ViewModels
     {
         public string GroupId { get; set; }
         public string GroupName { get; set; }
-        public ICollection<Player> Players { get; set; }
-        public string GroupLeaderId { get; set; }
+        public ICollection<PlayerResponseModel>? Players { get; set; }
+        public string? GroupLeaderId { get; set; }
         public GroupResponseModel(Group group)
         {
             this.GroupId = group.GroupId;
             this.GroupName = group.GroupName;
-            this.Players = group.Players;
+            this.Players = group.Players?.Select(player => new PlayerResponseModel(player)).ToList();
             this.GroupLeaderId = group.GroupLeaderId;
         }
     }
@@ -37,12 +37,21 @@ namespace SenWGames.Web.ViewModels
 
     public class GameCreatedModel
     {
+        //moet gamelobbymodel worden
         public GameLobby GameLobby { get; set; }
         public GameCreatedModel(GameLobby gameLobby)
         {
             this.GameLobby = gameLobby;
         }
     }
+
+    //public class GameLobbyModel
+    //{
+    //    public string Name { get; set; }
+    //    public ICollection<PlayerResponseModel>? Players { get; set; } = new List<PlayerResponseModel>();
+    //    public Game? Game { get; set; }
+    //    public bool Active { get; private set; }
+    //}
 
     public class NextRoundUselessBoxModel
     {

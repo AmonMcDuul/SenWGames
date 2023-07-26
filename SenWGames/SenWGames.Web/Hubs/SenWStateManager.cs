@@ -103,15 +103,17 @@ namespace SenWGames.Web.Hubs
                 return game;
             }
         }
-        public GameLobby CreateGame(string gameTitle, Group group)
+        public GameLobby CreateGame(string gameTitle, string groupId)
         {
             using (SenWDbContext dbContext = new SenWDbContext(_dbContextOptionsBuilder.Options))
             {
+                Group group = dbContext.Groups.Include(g => g.GameLobby).ThenInclude(gl => gl.Game).FirstOrDefault(g => g.GroupId == groupId);
                 GameLobby gameLobby = group.CreateGameLobby(gameTitle);
                 if (gameLobby == null)
                 {
                     throw new InvalidOperationException();
                 }
+                dbContext.SaveChanges();
                 return gameLobby;
             }
         }

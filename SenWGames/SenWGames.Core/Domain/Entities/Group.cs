@@ -40,7 +40,7 @@ namespace SenWGames.Core.Domain.Entities
 
         public GameLobby CreateGameLobby(string naam)
         {
-            //nog iets doen met players.
+            //nog iets doen met players?.
             this.GameLobby = new GameLobby(naam, this.Players!, naam);
             return this.GameLobby;
         }

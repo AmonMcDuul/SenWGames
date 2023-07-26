@@ -12,7 +12,7 @@ namespace SenWGames.Web.Hubs
         Player CreatePlayer(string playerName, double locationX, double locationY);
         Player GetPlayer(string playerId);
         Game GetGame(long gameId);
-        GameLobby CreateGame(string gameTitle, Group group);
+        GameLobby CreateGame(string gameTitle, string groupId);
 
         Game NextRoundUselessBox(long uselessBoxId);
 

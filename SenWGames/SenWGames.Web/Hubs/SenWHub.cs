@@ -48,11 +48,11 @@ namespace SenWGames.Web.Hubs
             return result;
         }
 
-        public async Task<GameCreatedModel> CreateGame(string groepId, string gameTitle)
+        public async Task<GameCreatedModel> CreateGame(string gameTitle, string groupId)
         {
-            Group? group = this._senWStateManager.GetGroup(groepId);
-            GameLobby gameLobby = this._senWStateManager.CreateGame(gameTitle, group);
+            GameLobby gameLobby = this._senWStateManager.CreateGame(gameTitle, groupId);
             GameCreatedModel result = new GameCreatedModel(gameLobby);
+            await Clients.Group(groupId).SendAsync("gameStarted", result);
             return result;
         }
 
