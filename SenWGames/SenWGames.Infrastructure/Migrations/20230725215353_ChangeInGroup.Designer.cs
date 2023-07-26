@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SenWGames.Infrastructure;
 
@@ -11,9 +12,11 @@ using SenWGames.Infrastructure;
 namespace SenWGames.Infrastructure.Migrations
 {
     [DbContext(typeof(SenWDbContext))]
-    partial class SenWDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230725215353_ChangeInGroup")]
+    partial class ChangeInGroup
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

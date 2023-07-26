@@ -20,7 +20,7 @@ namespace SenWGames.Web.Hubs
         {
             using (SenWDbContext dbContext = new SenWDbContext(_dbContextOptionsBuilder.Options))
             {
-                List<Group> groups = dbContext.Groups.ToList();
+                List<Group> groups = dbContext.Groups.OrderByDescending(g => g.CreatedAt).ToList();
                 return groups;
             }
         }
@@ -37,11 +37,12 @@ namespace SenWGames.Web.Hubs
             }
         }
 
-        public Group CreateGroup(string groepsNaam)
+        public Group CreateGroup(string groepsNaam, string playerId)
         {
             using (SenWDbContext dbContext = new SenWDbContext(_dbContextOptionsBuilder.Options))
             {
-                Group? group = new Group(groepsNaam, null, null, null, null);
+                Player? groupLeader = dbContext.Player.FirstOrDefault(p => p.PlayerId == playerId);
+                Group? group = new Group(groepsNaam, null, null, groupLeader, playerId);
                 dbContext.Groups.Add(group);
                 dbContext.SaveChanges();
                 return group;
@@ -52,7 +53,7 @@ namespace SenWGames.Web.Hubs
         {
             using (SenWDbContext dbContext = new SenWDbContext(_dbContextOptionsBuilder.Options))
             {
-                Group group = GetGroup(groupId);
+                Group group = dbContext.Groups.Include(g => g.Players).FirstOrDefault(g => g.GroupId == groupId);
                 Player? player = GetPlayer(playerId);
                 if (player == null)
                 {
