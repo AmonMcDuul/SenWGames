@@ -53,7 +53,7 @@ namespace SenWGames.Web.Hubs
         {
             using (SenWDbContext dbContext = new SenWDbContext(_dbContextOptionsBuilder.Options))
             {
-                Group group = GetGroup(groupId);
+                Group group = dbContext.Groups.Include(g => g.Players).FirstOrDefault(g => g.GroupId == groupId);
                 Player? player = GetPlayer(playerId);
                 if (player == null)
                 {
