@@ -120,12 +120,20 @@ namespace SenWGames.Web.Hubs
 
         public Game NextRoundUselessBox(long uselessBoxId)
         {
-            Game game = GetGame(uselessBoxId);
-            if (game is UselessBox uselessBox)
+            using (SenWDbContext dbContext = new SenWDbContext(_dbContextOptionsBuilder.Options))
             {
-                uselessBox.UseUselessBox();
+                Game? game = dbContext.Game.FirstOrDefault(g => g.Id == uselessBoxId);
+                if (game == null)
+                {
+                    throw new InvalidOperationException();
+                }
+                if (game is UselessBox uselessBox)
+                {
+                    uselessBox.UseUselessBox();
+                    dbContext.SaveChanges();
+                }
+                return game;
             }
-            return game;
         }
     }
 }

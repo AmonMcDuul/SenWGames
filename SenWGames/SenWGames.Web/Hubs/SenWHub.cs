@@ -56,11 +56,11 @@ namespace SenWGames.Web.Hubs
             return result;
         }
 
-        public async Task<NextRoundUselessBoxModel> NextRoundUselessBox(long uselessBoxId)
+        public async Task NextRoundUselessBox(string groupId, long uselessBoxId)
         {
             Game game = this._senWStateManager.NextRoundUselessBox(uselessBoxId);
             NextRoundUselessBoxModel result = new NextRoundUselessBoxModel((UselessBox)game);
-            return result;
+            await Clients.Group(groupId).SendAsync("progressUselessBoxGame", result);
         }
 
     }

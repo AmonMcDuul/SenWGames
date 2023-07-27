@@ -37,28 +37,63 @@ namespace SenWGames.Web.ViewModels
 
     public class GameCreatedModel
     {
-        //moet gamelobbymodel worden
-        public GameLobby GameLobby { get; set; }
+        public string Name { get; set; }
+        public ICollection<PlayerResponseModel>? Players { get; set; } = new List<PlayerResponseModel>();
+        public GameModel? Game { get; set; }
+        public bool Active { get; private set; }
         public GameCreatedModel(GameLobby gameLobby)
         {
-            this.GameLobby = gameLobby;
+            this.Name = gameLobby.Name;
+            this.Players = gameLobby.Players?.Select(player => new PlayerResponseModel(player)).ToList();
+            if (gameLobby.Game is UselessBox uselessBox)
+            {
+                this.Game = new GameModel(uselessBox);
+            }
+            this.Active = gameLobby.Active;
         }
     }
 
-    //public class GameLobbyModel
-    //{
-    //    public string Name { get; set; }
-    //    public ICollection<PlayerResponseModel>? Players { get; set; } = new List<PlayerResponseModel>();
-    //    public Game? Game { get; set; }
-    //    public bool Active { get; private set; }
-    //}
+    public class GameModel
+    {
+        public long GameId { get; set; }
+        public string Name { get; set; }
+        public string Image { get; set; }
+        public string? Title { get; set; }
+        public string? Description { get; set; }
+        public bool? State { get; set; }
+        public int? Count { get; set; }
+        public GameModel(Game game) 
+        {
+            this.GameId = game.Id;
+            this.Name = game.Name;
+            this.Image = game.Image;
+            if (game is UselessBox uselessbox)
+            { 
+                this.Title = uselessbox.Title;
+                this.Description = uselessbox.Description;
+                this.State = uselessbox.State;
+                this.Count = uselessbox.Count;
+            }
+        }
+
+    }
+
+    public class GameLobbyModel
+    {
+        public string Name { get; set; }
+        public ICollection<PlayerResponseModel>? Players { get; set; } = new List<PlayerResponseModel>();
+        public GameModel? Game { get; set; }
+        public bool Active { get; private set; }
+    }
 
     public class NextRoundUselessBoxModel
     {
+        public long GameId { get; set; }
         public bool State { get; set; }
         public int Count { get; set; }
         public NextRoundUselessBoxModel(UselessBox uselessBox)
         {
+            GameId = uselessBox.Id;
             State = uselessBox.State;
             Count = uselessBox.Count;
         }
