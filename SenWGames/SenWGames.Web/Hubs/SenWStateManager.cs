@@ -135,5 +135,18 @@ namespace SenWGames.Web.Hubs
                 return game;
             }
         }
+
+        public Chat GetChatMessage(string groupId, string playerId, string message)
+        {
+            using (SenWDbContext dbContext = new SenWDbContext(_dbContextOptionsBuilder.Options))
+            {
+                Chat chatMessage = new Chat(groupId, playerId, message);
+
+                dbContext.Chat.Add(chatMessage);
+                dbContext.SaveChanges();
+
+                return chatMessage;
+            }
+        }
     }
 }

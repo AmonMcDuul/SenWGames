@@ -63,5 +63,12 @@ namespace SenWGames.Web.Hubs
             await Clients.Group(groupId).SendAsync("progressUselessBoxGame", result);
         }
 
+        public async Task GetChatMessage(string groupId, string playerId, string message)
+        {
+            Chat chatMessage = this._senWStateManager.GetChatMessage(groupId, playerId, message);
+            GetChatMessageModel result = new GetChatMessageModel(chatMessage);
+            await Clients.Group(groupId).SendAsync("getChatMessage", result);
+        }
+
     }
 }

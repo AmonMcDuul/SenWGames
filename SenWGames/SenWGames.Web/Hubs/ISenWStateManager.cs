@@ -13,8 +13,8 @@ namespace SenWGames.Web.Hubs
         Player GetPlayer(string playerId);
         Game GetGame(long gameId);
         GameLobby CreateGame(string gameTitle, string groupId);
-
         Game NextRoundUselessBox(long uselessBoxId);
+        Chat GetChatMessage(string groupId, string playerId, string message);
 
     }
 }

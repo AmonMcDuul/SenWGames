@@ -98,4 +98,17 @@ namespace SenWGames.Web.ViewModels
             Count = uselessBox.Count;
         }
     }
+
+    public class GetChatMessageModel
+    {
+        public string GroupId { get; set; }
+        public string PlayerId { get; set; }
+        public string Message { get; set; }
+        public GetChatMessageModel(Chat chatMessage)
+        {
+            GroupId = chatMessage.GroupId;
+            PlayerId = chatMessage.PlayerId;
+            Message = chatMessage.Message;
+        }
+    }
 }
