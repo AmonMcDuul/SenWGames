@@ -103,27 +103,37 @@ namespace SenWGames.Web.Hubs
                 return game;
             }
         }
-        public GameLobby CreateGame(string gameTitle, Group group)
+        public GameLobby CreateGame(string gameTitle, string groupId)
         {
             using (SenWDbContext dbContext = new SenWDbContext(_dbContextOptionsBuilder.Options))
             {
+                Group group = dbContext.Groups.Include(g => g.GameLobby).ThenInclude(gl => gl.Game).FirstOrDefault(g => g.GroupId == groupId);
                 GameLobby gameLobby = group.CreateGameLobby(gameTitle);
                 if (gameLobby == null)
                 {
                     throw new InvalidOperationException();
                 }
+                dbContext.SaveChanges();
                 return gameLobby;
             }
         }
 
         public Game NextRoundUselessBox(long uselessBoxId)
         {
-            Game game = GetGame(uselessBoxId);
-            if (game is UselessBox uselessBox)
+            using (SenWDbContext dbContext = new SenWDbContext(_dbContextOptionsBuilder.Options))
             {
-                uselessBox.UseUselessBox();
+                Game? game = dbContext.Game.FirstOrDefault(g => g.Id == uselessBoxId);
+                if (game == null)
+                {
+                    throw new InvalidOperationException();
+                }
+                if (game is UselessBox uselessBox)
+                {
+                    uselessBox.UseUselessBox();
+                    dbContext.SaveChanges();
+                }
+                return game;
             }
-            return game;
         }
     }
 }

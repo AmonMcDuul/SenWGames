@@ -17,6 +17,7 @@ namespace SenWGames.Infrastructure
         {
             modelBuilder.Entity<FourInARow>().HasBaseType<Game>();
             modelBuilder.Entity<TicTacToe>().HasBaseType<Game>();
+            modelBuilder.Entity<UselessBox>().HasBaseType<Game>();
         }
 
         /// <summary>
