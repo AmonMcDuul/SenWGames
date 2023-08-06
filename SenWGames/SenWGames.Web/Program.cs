@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using SenWGames.Infrastructure;
 using SenWGames.Web.Hubs;
+using SenWGames.Web.Services;
 using System.Diagnostics;
 using System.Text.Json.Serialization;
 
@@ -45,6 +46,8 @@ builder.Services.AddSingleton<HubConnection>(provider => {
         .Build();
 });
 builder.Services.AddSingleton<ISenWStateManager, SenWStateManager>();
+
+builder.Services.AddHostedService<DataCleanupService>();
 
 var app = builder.Build();
 

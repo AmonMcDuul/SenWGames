@@ -19,6 +19,14 @@ namespace SenWGames.Infrastructure
             modelBuilder.Entity<FourInARow>().HasBaseType<Game>();
             modelBuilder.Entity<TicTacToe>().HasBaseType<Game>();
             modelBuilder.Entity<UselessBox>().HasBaseType<Game>();
+
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Player>()
+               .HasOne(p => p.Group)
+               .WithMany(g => g.Players)
+               .HasForeignKey(p => p.GroupId)
+               .OnDelete(DeleteBehavior.SetNull);
         }
 
         /// <summary>

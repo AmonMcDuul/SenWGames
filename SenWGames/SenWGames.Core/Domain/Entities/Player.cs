@@ -13,6 +13,10 @@ namespace SenWGames.Core.Domain.Entities
         public int? Draws { get; private set; }
         public double LocationX { get; private set; }
         public double LocationY { get; private set; }
+
+        public Group Group { get; set; } // Reference navigation property to the related Group
+        public long? GroupId { get; set; } // The foreign key to Group, nullable
+
         protected Player() { }
 
         public Player(string playerName)
